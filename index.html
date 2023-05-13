@@ -1,64 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <style>
-        body {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            margin: 0;
-            background: url('background.png') no-repeat center center fixed; 
-            -webkit-background-size: contain;
-            -moz-background-size: contain;
-            -o-background-size: contain;
-            background-size: contain;
-        }
-        h1 {
-            margin-bottom: 20px;
-        }
-        .container {
-            display: flex;
-            align-items: center;
-        }
-        .square {
-            width: 200px;
-            height: 200px;
-            background-color: #ffb2ff;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-right: 20px;
-        }
-        .square input {
-            font-size: 100px;
-            color: #000000;
-            background: transparent;
-            border: none;
-            text-align: center;
-        }
-        .buttons {
-            display: flex;
-            flex-direction: column;
-        }
-        button {
-            width: 60px;
-            height: 40px;
-            margin-bottom: 10px;
-            font-size: 20px;
-        }
-    </style>
-</head>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+        <style>
+            body {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                min-height: 100vh;
+                margin: 0;
+                background: url('background.png') no-repeat center center fixed; 
+                -webkit-background-size: contain;
+                -moz-background-size: contain;
+                -o-background-size: contain;
+                background-size: contain;
+            }
+            h1 {
+                margin-bottom: 20px;
+            }
+            .container {
+                display: flex;
+                align-items: center;
+            }
+            .square {
+                width: 200px;
+                height: 200px;
+                background-color: #ffb2ff;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                margin-right: 20px;
+            }
+            .square input {
+                font-size: 100px;
+                color: #000000;
+                background: transparent;
+                border: none;
+                text-align: center;
+            }
+            .buttons {
+                display: flex;
+                flex-direction: column;
+            }
+            button {
+                width: 60px;
+                height: 40px;
+                margin-bottom: 10px;
+                font-size: 20px;
+            }
+        </style>
+    </head>
 <body>
     <h1>임시 주차 대 수 확인 용</h1>
     <div class="container">
         <div class="square">
-            <input id="number" type="text" value="0">
+            <input id="number" type="number" value="0">
         </div>
         <div class="buttons">
             <button id="increment">+</button>
@@ -74,13 +74,13 @@
     <script>
         // Your web app's Firebase configuration
         var firebaseConfig = {
-            apiKey: "AIzaSyCXsaQLSkavfffBpMDKt1gIsQfucrIRgeM",
-            authDomain: "hipark-8e3c5.firebaseapp.com",
-            databaseURL: "https://hipark-8e3c5-default-rtdb.firebaseio.com",
-            projectId: "hipark-8e3c5",
-            storageBucket: "hipark-8e3c5.appspot.com",
-            messagingSenderId: "636416372183",
-            appId: "1:636416372183:web:bac479b06c72d780d86f92"
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_AUTH_DOMAIN",
+            databaseURL: "YOUR_DATABASE_URL",
+            projectId: "YOUR_PROJECT_ID",
+            storageBucket: "YOUR_STORAGE_BUCKET",
+            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+            appId: "YOUR_APP_ID"
         };
 
         // Initialize Firebase
@@ -90,6 +90,13 @@
         const incrementButton = document.getElementById('increment');
         const decrementButton = document.getElementById('decrement');
         const saveButton = document.getElementById('save');
+
+        firebase.database().ref().set({
+  "rules": {
+    ".read": true,
+    ".write": true
+  }
+});
 
         // Reference to your entire Firebase database
         var myFirebase = firebase.database().ref();
@@ -105,11 +112,13 @@
         incrementButton.addEventListener('click', function() {
             let currentNumber = parseInt(numberElement.value);
             numberElement.value = currentNumber + 1;
+            numberRef.set(numberElement.value);
         });
 
         decrementButton.addEventListener('click', function() {
             let currentNumber = parseInt(numberElement.value);
             numberElement.value = currentNumber - 1;
+            numberRef.set(numberElement.value);
         });
 
         saveButton.addEventListener('click', function() {
